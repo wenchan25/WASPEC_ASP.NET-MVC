@@ -1,0 +1,36 @@
+@model ICollection<Class008.Models.Book>
+@*这里可以用List，也可以用ICollection*@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BookList</title>
+</head>
+<body>
+    <div>
+        <h1>All Books</h1>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Delete</th>
+                <th>Edit</th>
+            </tr>
+            @foreach (var book in this.Model)
+            {
+                <tr>
+                    <td>@book.Id</td>
+                    <td>@book.Name</td>
+                    <td>@book.Price</td>
+                    <td>@Html.ActionLink("Delete", "DeleteBook", new { id = book.Id })</td>
+                    @*这里不用写controller名字，因为这个view本身就在Book下面，加了反而画蛇添足*@
+                    <td>@Html.ActionLink("Edit", "UpdatingBook", new { id = book.Id })</td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
