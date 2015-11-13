@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Class008.Models
+{
+    public class BookProvider
+    {
+        static BookProvider()    
+        // 这里需要写成static，这样类一加载的时候就创建了Instance，
+        // 而且不能写成public
+        {
+            Instance = new BookProvider();                 // 一个类只需要一个实例的情况，叫做singleton设计模式（单例）
+            Instance.AllBooks = new List<Book>();
+        }
+        public ICollection<Book> AllBooks { get; private set; } 
+        // private表示从外界不能操作集合
+        // 只有用ICollection才能用到add, remove等方法；它也是实现了IEnumerable的接口的
+        // 这里不能用static，因为静态的话表示AllBooks这个属性是类的，而Instance其实本质上是一个实例
+        // 用static的话，Instance就调不到这个（类的）属性了，只能是实例的属性
+
+        public static BookProvider Instance { get; private set; }      // 单例模式看起来很像静态类，但是有很多优势
+    }
+}
