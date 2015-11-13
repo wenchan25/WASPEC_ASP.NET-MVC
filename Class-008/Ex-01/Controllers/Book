@@ -1,0 +1,64 @@
+using Class008.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Class008.Controllers
+{
+    public class BookController : Controller
+    {
+        // GET: Book
+        public ActionResult Create(string name, double price)
+        {
+            Book book = new Book() { Name = name, Price = price };
+            if (BookProvider.Instance.AllBooks.Count() == 0)
+            {
+                book.Id = 1;
+            }
+            else
+            {
+                book.Id = BookProvider.Instance.AllBooks.Max(b => b.Id) + 1;
+            }
+            BookProvider.Instance.AllBooks.Add(book);
+            return View("BookList", BookProvider.Instance.AllBooks); // 这里可以不用加ToList方法
+        }
+
+        public ActionResult DeleteBook(int id)
+        {
+            Book deletingBook = BookProvider.Instance.AllBooks.SingleOrDefault(b => b.Id == id);
+            if (deletingBook != null)
+            {
+                BookProvider.Instance.AllBooks.Remove(deletingBook);
+            }
+            return View("BookList", BookProvider.Instance.AllBooks);
+        }
+
+        public ActionResult UpdatingBook(int id)
+        {
+            Book updatingBook = BookProvider.Instance.AllBooks.SingleOrDefault(b => b.Id == id);
+            if (updatingBook != null)
+            {
+                return View("UpdateBook", updatingBook);
+                // 这儿的逻辑有点搅，先是只传一个Id的参数回来，找到某本书
+                // 如果找到的话，就跳到UpdateBook这个View里面去                
+            }
+            return View("BookList", BookProvider.Instance.AllBooks.ToList());
+            // 如果没有找到，就相当于什么都不做，返回到BookList这个View去
+        }
+
+        public ActionResult UpdateBook(String name, double price, int id)
+        // 其实update就相当于是删一本再加一本，所以用的参数比delete多name和price
+        // 这里接收到的是从UpdateBook这个View传回来的参数
+        {
+            Book editingBook = BookProvider.Instance.AllBooks.SingleOrDefault(b => b.Id == id);
+            if (editingBook != null)
+            {
+                editingBook.Name = name;
+                editingBook.Price = price;
+            }
+            return View("BookList", BookProvider.Instance.AllBooks.ToList());
+        }
+    }
+}
