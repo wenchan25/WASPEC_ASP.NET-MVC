@@ -1,0 +1,23 @@
+@model Class008.Models.Book
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditBook</title>
+</head>
+<body>
+    <div>
+        <h1>Edit Book @Model.Name</h1>
+        @using (Html.BeginForm("UpdateBook", "Book")) // 必须写controller的名字
+                                                      // BeginForm没有只含一个参数的重载
+        {
+            @*能让用户看到Id，但是不能改*@
+            <div>Book ID</div> @Html.TextBox("id", @Model.Id) <br />
+            <div>Book Name</div> @Html.TextBox("name", @Model.Name) <br />
+            <div>Book Price</div> @Html.TextBox("price", @Model.Price)<br />
+            <input type="submit" value="Update" />
+        }
+    </div>
+</body>
+</html>
