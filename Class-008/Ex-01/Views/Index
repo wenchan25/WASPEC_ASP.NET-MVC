@@ -1,0 +1,26 @@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <h1>Welcome to My Book Store</h1>
+        <hr />
+        <h2>Create a New Book</h2>
+        @using (Html.BeginForm("Create", "Book")) // 这里必须要加Book这个controller的名字，因为现在是在Home下面
+        {
+            <div>Book Name</div> @Html.TextBox("name") <br />
+            <div>Book Price</div> @Html.TextBox("price")<br />
+            <input type="submit" value="Create" />
+        }
+    </div>
+</body>
+</html>
