@@ -1,0 +1,20 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Class007.Models
+{
+    public class Bookprovider
+    {
+        public static IEnumerable<Book> GetAllBooks()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                var book = new Book() { Id = i, Name = String.Format("Book #{0}", i), Price = i };
+                yield return book;
+            }
+        }
+    }
+}
