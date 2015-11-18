@@ -1,0 +1,38 @@
+@model Class008_2.Models.OrderViewModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Order</title>
+</head>
+<body>
+    <div>
+        <h1>Order #@Model.Order.Id</h1>
+        @Html.LabelFor(m => m.Book.Id)
+        @Html.TextBoxFor(m => m.Book.Id)<br />
+
+        @Html.LabelFor(m => m.User.Id)
+        @Html.TextBoxFor(m => m.User.Id)<br />
+
+        @Html.LabelFor(m => m.Order.Total)
+        @Html.TextBoxFor(m => m.Order.Total)<br />
+        <hr />
+
+        <h2>Book</h2>
+        @Html.LabelFor(m => m.Book.Name)
+        @Html.TextBoxFor(m => m.Book.Name)<br />
+
+        @Html.LabelFor(m => m.Book.Price)
+        @Html.TextBoxFor(m => m.Book.Price)<br />
+        <hr />
+
+        <h2>User</h2>
+        @Html.LabelFor(m => m.User.Id)
+        @Html.TextBoxFor(m => m.User.Id)<br />
+
+        @Html.LabelFor(m => m.User.Name)
+        @Html.TextBoxFor(m => m.User.Name)<br />
+    </div>
+</body>
+</html>
