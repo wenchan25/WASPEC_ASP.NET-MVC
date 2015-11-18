@@ -1,0 +1,21 @@
+using Class007.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Class007.Controllers
+{
+    public class BookController : Controller
+    {
+        private IEnumerable<Book> allBooks = Bookprovider.GetAllBooks();
+
+        public ActionResult Querry(int minPrice, int maxPrice, int maxResult)
+        {
+            IEnumerable<Book> selectedBooks = this.allBooks.Where(b => b.Price >= minPrice && b.Price <= maxPrice).Take(maxResult);
+
+            return View("BookList", selectedBooks);
+        }
+    }
+}
