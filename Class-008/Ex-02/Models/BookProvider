@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Class008_2.Models
+{
+    public class BookProvider
+    {
+        static BookProvider()
+        {
+            Instance = new BookProvider();
+            Instance.AllBooks = new List<Book>();
+            for (int i = 1; i < 10; i++)
+            {
+                Book book = new Book() { Id = i, Name = string.Format("Book #{0}", i), Price = i + 0.5 };
+                // 自带一些书
+                Instance.AllBooks.Add(book);
+            }
+            Counter = 0;
+        }
+        public List<Book> AllBooks { get; private set; }
+        public static BookProvider Instance { get; private set; }
+        public static int Counter; // this is for the ID
+    }
+}
