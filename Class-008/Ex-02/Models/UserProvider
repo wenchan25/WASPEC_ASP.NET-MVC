@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Class008_2.Models
+{
+    public class UserProvider
+    {
+        public static UserProvider Instance { get; private set; }
+        public List<User> AllUser { get; private set; }
+
+        static UserProvider()
+        {
+            Instance = new UserProvider();
+            Instance.AllUser = new List<User>();
+
+            for (int i = 1; i <= 10; i++)
+            {
+                User user = new User() { Id = i, Name = string.Format("张{0}", i) };
+                // 和书一样，自带一些用户
+                Instance.AllUser.Add(user);
+            }
+        }
+    }
+}
