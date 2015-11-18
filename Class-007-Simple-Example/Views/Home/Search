@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Search</title>
+</head>
+<body>
+    <div>
+        <h1>Search Books</h1>
+        @*<form action="/Book/Querry" , method="post">
+                <span>Min Price</span><input type="text" name="minPrice" /><br />
+                <span>Max Price</span><input type="text" name="maxPrice" />
+                <input type="submit"  value="Go" />
+            </form>*@
+
+        @using (Html.BeginForm("Querry", "Book", FormMethod.Post))
+        {
+            @Html.Label("Min Price") @Html.TextBox("minPrice") <br />
+            @Html.Label("Max Price") @Html.TextBox("maxPrice") <br />
+            <span>Max Result</span> <br />
+            @Html.DropDownList("maxResult", new List<SelectListItem>() {
+                new SelectListItem() { Text = "10 books", Value = "10" },
+                new SelectListItem() { Text = "20 books", Value = "20" },
+                new SelectListItem() { Text = "30 books", Value = "30" },
+            });
+            <input type="submit" value="Search" />
+        }
+    </div>
+</body>
+</html>
