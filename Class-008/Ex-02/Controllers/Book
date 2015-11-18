@@ -1,0 +1,93 @@
+using Class008_2.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Class008_2.Controllers
+{
+    public class BookController : Controller
+    {
+        // GET: Book
+        public ActionResult Creating() // 在Book下面，CreatingBook省略Book
+        {
+            return View("Create");
+        }
+
+        // 也可以用同样的名字create
+        // 从Index的ActionLink超链接过来的，只能是Get
+        // Get还只能在ToolBar里面用
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Book book)
+        /* Model Binding
+           只要传回来的参数能和这个Book类型的其中一个参数match上，
+           参数不管大小写，只要名字一样，就create一个新的对象
+           依赖于反射的机制
+           这个时候传回来的就是一个Model了 而不是零散的参数
+        */
+        {
+            if (book != null && this.ModelState.IsValid)
+            // ModelState.IsValid表示传回来的对象合法
+            {
+                book.Id = ++BookProvider.Counter;
+                // ++先执行加加，然后就返回值
+                BookProvider.Instance.AllBooks.Add(book);
+            }
+            return View("BookList", BookProvider.Instance.AllBooks);
+        }
+
+        [HttpGet]
+        // 从超链接回来，都是Get的的方式
+        public ActionResult Edit(int id)
+        {
+            Book editingBook = BookProvider.Instance.AllBooks.SingleOrDefault(b => b.Id == id);
+            if (editingBook != null)
+            {
+                return View(editingBook);
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Book book)
+        {
+            // 传回来的book永远都是一个新创建的对象
+            // 所以要比较一下库里的Id
+            var updatedBook = BookProvider.Instance.AllBooks.SingleOrDefault(b => b.Id == book.Id);
+            if (book != null)
+            {
+                updatedBook.Name = book.Name;
+                updatedBook.Price = book.Price;
+                // 也可以updatedBook = book; 直接覆盖掉
+            }
+            else
+            {
+                return View("Error");
+            }
+            return View("BookList", BookProvider.Instance.AllBooks);
+            // 上面的return代码可以直接从Create那个Action拷贝过来
+            // 因为最终都是返回一个AllBooks
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            Book deletingBook = BookProvider.Instance.AllBooks.SingleOrDefault(b => b.Id == id);
+            if (deletingBook != null)
+            {
+                BookProvider.Instance.AllBooks.Remove(deletingBook);
+            }
+            return View("BookList", BookProvider.Instance.AllBooks);
+        }
+    }
+}
