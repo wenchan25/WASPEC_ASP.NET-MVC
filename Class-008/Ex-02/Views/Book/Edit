@@ -1,0 +1,23 @@
+@model Class008_2.Models.Book
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    <div>
+        <h1>Edit Book @Model.Name</h1>
+        @using (Html.BeginForm("Edit", "Book", FormMethod.Post))
+        {
+            @Html.LabelFor(m => m.Id) @Html.TextBoxFor(m => m.Id) <br />
+            @*Label的作用就是点击Id这个Label，光标会自动跳到文本框里面*@
+            @Html.LabelFor(m => m.Name) @Html.TextBoxFor(m => m.Name) <br />
+            @Html.LabelFor(m => m.Price) @Html.TextBoxFor(m => m.Price) <br />
+            <input type="submit" value="Update" />
+        }
+    </div>
+</body>
+</html>
