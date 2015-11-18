@@ -1,0 +1,26 @@
+@model Class008_2.Models.Book
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    <div>
+        <h1>Create New Book</h1>
+        @using (Html.BeginForm("Create", "Book"))
+        {
+            <div>Book Name: </div> @Html.TextBoxFor(m => m.Name) <br />
+            // 等同于@Html.TextBox("Name", @Model.Name)
+            <div>Book Price: </div> @Html.TextBoxFor(m => m.Price) <br />
+            <input type="submit" value="Create" />
+        }
+    </div>
+</body>
+</html>
