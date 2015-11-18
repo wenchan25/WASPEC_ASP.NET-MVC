@@ -1,0 +1,45 @@
+@model Class008_2.Models.BuyViewModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Buy</title>
+</head>
+<body>
+    <div>
+        <h1>Buy book</h1>
+        <h2>You can only buy less than @Model.Limit Books</h2>
+        @{
+            List<SelectListItem> userList = new List<SelectListItem>();
+            foreach (var user in Class008_2.Models.UserProvider.Instance.AllUser)
+            {
+                SelectListItem item = new SelectListItem() { Text = user.Name, Value = user.Id.ToString() };
+                userList.Add(item);
+            }
+
+            List<SelectListItem> bookList = new List<SelectListItem>();
+            foreach (var book in Class008_2.Models.BookProvider.Instance.AllBooks)
+            {
+                SelectListItem item = new SelectListItem() { Text = book.Name, Value = book.Id.ToString() };
+                bookList.Add(item);
+            }
+        }
+
+
+        @using (Html.BeginForm("Buy", "Trade"))
+        {
+            @Html.HiddenFor(m => m.Limit)
+            @Html.LabelFor(m => m.UserId)
+            @Html.DropDownListFor(m => m.UserId, userList)<br />
+
+            @Html.LabelFor(m => m.BookId)
+            @Html.DropDownListFor(m => m.BookId, bookList) <br />
+
+            @Html.LabelFor(m => m.Amount)
+            @Html.TextBoxFor(m => m.Amount)<br />
+            <input type="submit" value="Buy" />
+        }
+    </div>
+</body>
+</html>
