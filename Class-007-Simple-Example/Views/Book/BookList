@@ -1,0 +1,30 @@
+@model IEnumerable<Class007.Models.Book>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BookList</title>
+</head>
+<body>
+    <div>
+        <h1>Here are the books</h1>
+        <table border="1">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+            @foreach (var book in this.Model)
+            {
+                <tr>
+                    <td>@book.Id</td>
+                    <td>@book.Name</td>
+                    <td>@book.Price</td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
