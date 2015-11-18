@@ -1,0 +1,49 @@
+using Class008_2.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Class008_2.Controllers
+{
+    public class TradeController : Controller
+    {
+        // GET: Trade
+        [HttpGet]
+        public ActionResult Buy()
+        {
+            BuyViewModel vm = new BuyViewModel() { Limit = 3 };
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult Buy(BuyViewModel vm)
+        {
+            if (vm.Amount < 0 || vm.Amount > vm.Limit || vm == null || !this.ModelState.IsValid)
+            {
+                return View("Error");
+            }
+
+            Book targetBook = BookProvider.Instance.AllBooks.SingleOrDefault(b => b.Id == vm.BookId);
+            User targetUser = UserProvider.Instance.AllUser.SingleOrDefault(u => u.Id == vm.UserId);
+            if (targetBook == null || targetUser == null)
+            {
+                return View("Error");
+            }
+            Order order = new Order();
+            order.Id = (new Random()).Next(0,1000);
+            order.BookId = vm.BookId;
+            order.UserId = vm.UserId;
+            order.Total = targetBook.Price * vm.Amount;
+
+            OrderViewModel orderViewModel = new OrderViewModel();
+            orderViewModel.Order = order;
+            orderViewModel.Book = targetBook;
+            orderViewModel.User = targetUser;
+
+            return View("Order", orderViewModel);
+        }
+
+    }
+}
